@@ -109,9 +109,6 @@ export async function handleServersAPI(request, env, sys) {
       server.disk_total = latestMetrics.disk_total || 0;
       server.disk_used = latestMetrics.disk_used || 0;
       server.last_updated = lastUpdated;
-    } else {
-      lastUpdated = new Date(server.last_updated).getTime();
-      isOnline = (now - lastUpdated) < 300000;
     }
     
     if (isOnline) {

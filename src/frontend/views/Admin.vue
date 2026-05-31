@@ -44,11 +44,11 @@
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-online">{{ stats.online }}</div>
-            <div class="stat-label">{{ trans.onlineCount }}</div>
+            <div class="stat-label">{{ trans.online }}</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-offline">{{ stats.offline }}</div>
-            <div class="stat-label">{{ trans.offlineCount }}</div>
+            <div class="stat-label">{{ trans.offline }}</div>
           </div>
           <div class="stat-card">
             <div class="stat-value" id="stat-avg-cpu">{{ stats.avg_cpu }}%</div>
@@ -115,12 +115,8 @@
                   :key="server.id"
                   class="server-row"
                   :data-server-id="server.id"
-                  draggable="true"
-                  @dragstart="handleDragStart"
-                  @dragover.prevent
-                  @drop="handleDrop($event, server.id)"
                 >
-                  <td class="drag-handle" style="text-align:center; cursor:move; user-select:none;" :title="trans.dragSort">⋮⋮</td>
+                  <td class="drag-handle" style="text-align:center; cursor:move; user-select:none;" :title="trans.dragSort" draggable="true" @dragstart="handleDragStart" @dragover.prevent @drop="handleDrop($event, server.id)">⋮⋮</td>
                   <td style="text-align:center;"><input type="checkbox" class="server-checkbox" :value="server.id" v-model="selectedServers"></td>
                   <td>
                     <div style="display:flex; align-items:center; gap:8px;">
@@ -712,19 +708,19 @@ const toggleSelectAll = () => {
 }
 
 const getStatusColor = (server) => {
-  const lastUpdated = new Date(server.last_updated).getTime()
-  return (Date.now() - lastUpdated) < 300000 ? 'var(--accent-green)' : 'var(--accent-red)'
+  return server.is_online ? 'var(--accent-green)' : 'var(--accent-red)'
 }
 
 const getStatusText = (server) => {
-    const lastUpdated = new Date(server.last_updated).getTime()
-    return (Date.now() - lastUpdated) < 300000 ? trans.onlineStatus : trans.offlineStatus
-  }
+  let status = server.is_online ? '● ' + trans.value.online : '● ' + trans.value.offline
+  return status.toUpperCase()
+}
 
   let draggedRow = null
 
   const handleDragStart = (e) => {
-    draggedRow = e.target.dataset.serverId
+    const row = e.target.closest('.server-row')
+    draggedRow = row ? row.dataset.serverId : null
     e.dataTransfer.effectAllowed = 'move'
   }
 

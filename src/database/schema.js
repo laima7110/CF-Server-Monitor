@@ -21,8 +21,6 @@ export async function initDatabase(db) {
         ram TEXT DEFAULT '0',
         disk TEXT DEFAULT '0',
         load_avg TEXT DEFAULT '0',
-        uptime TEXT DEFAULT '0',
-        last_updated INTEGER DEFAULT 0,
         ram_total TEXT DEFAULT '0',
         net_rx TEXT DEFAULT '0',
         net_tx TEXT DEFAULT '0',

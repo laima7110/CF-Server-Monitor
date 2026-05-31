@@ -94,7 +94,7 @@
               <th>{{ trans.hostname.substring(0, 4) }}</th>
               <th>{{ trans.hostname }}</th>
               <th>{{ trans.region }}</th>
-              <th>{{ trans.archOs }}</th>
+              <th>{{ trans.osArch }}</th>
               <th>{{ trans.cpu }}</th>
               <th>{{ trans.ram }}</th>
               <th>{{ trans.disk }}</th>
@@ -127,7 +127,7 @@
                 <span v-else>🏳️</span>
                 {{ (server.country || 'XX').toUpperCase() }}
               </td>
-              <td><span class="os-label">{{ server.arch }} / {{ server.cpu_cores || 'N/A' }}C</span></td>
+              <td><span class="os-label">{{ server.os || 'N/A' }} / {{ server.arch || 'N/A' }} </span></td>
               <td>
                 <div class="table-stat">
                   <div class="stat-bar-container" style="width:60px;">
@@ -156,7 +156,7 @@
               <td>{{ formatBytes(server.net_out_speed) }}/s</td>
               <td>{{ formatBytes(server.net_rx) }}</td>
               <td>{{ formatBytes(server.net_tx) }}</td>
-              <td class="update-time">{{ getUpdateTime(server.last_updated) }}{{ trans.ago }}</td>
+              <td class="update-time">{{ getUpdateTime(server.last_updated) }}</td>
             </tr>
           </tbody>
         </table>
@@ -248,8 +248,15 @@ const getStatusColor = (server) => {
 }
 
 const getUpdateTime = (lastUpdated) => {
-  const last = new Date(lastUpdated).getTime()
-  return Math.round((Date.now() - last) / 1000)
+  if (!lastUpdated) return '-'
+  const diffMs = Date.now() - new Date(lastUpdated).getTime()
+  if (diffMs < 0) return '0day, 00:00:00 ago'
+  const totalSeconds = Math.floor(diffMs / 1000)
+  const days = Math.floor(totalSeconds / 86400)
+  const hours = Math.floor((totalSeconds % 86400) / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+  return `${days}day${days !== 1 ? 's' : ''}, ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ago`
 }
 
 const refreshData = async () => {

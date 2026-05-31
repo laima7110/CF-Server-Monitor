@@ -47,14 +47,14 @@ export async function handleUpdate(request, env, ctx) {
     if (Math.random() * 100 < SERVERS_UPDATE_PERCENTAGE) {
       await env.DB.prepare(`
         UPDATE servers 
-        SET cpu = ?, ram = ?, disk = ?, load_avg = ?, uptime = ?, last_updated = ?,
+        SET cpu = ?, ram = ?, disk = ?, load_avg = ?, 
             ram_total = ?, net_rx = ?, net_tx = ?, net_in_speed = ?, net_out_speed = ?,
             os = ?, cpu_info = ?, cpu_cores = ?, arch = ?, boot_time = ?, ram_used = ?, swap_total = ?, 
             swap_used = ?, disk_total = ?, disk_used = ?, processes = ?, tcp_conn = ?, udp_conn = ?, 
             country = ?, ip_v4 = ?, ip_v6 = ?, ping_ct = ?, ping_cu = ?, ping_cm = ?, ping_bd = ?
         WHERE id = ?
       `).bind(
-        metrics.cpu, metrics.ram, metrics.disk, metrics.load, metrics.uptime, Date.now(),
+        metrics.cpu, metrics.ram, metrics.disk, metrics.load,
         metrics.ram_total || '0', metrics.net_rx || '0', metrics.net_tx || '0',
         metrics.net_in_speed || '0', metrics.net_out_speed || '0',
         metrics.os || '', metrics.cpu_info || '', metrics.cpu_cores || '0', metrics.arch || '', metrics.boot_time || '',

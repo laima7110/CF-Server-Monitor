@@ -190,7 +190,6 @@ sql += `\n-- 更新服务器最新状态\n`;
 
 for (const [serverId, data] of Object.entries(serverLatestMetrics)) {
   const { ts, metrics } = data;
-  const uptime = Math.floor((now - servers.find(s => s.id === serverId).boot_time) / 1000);
   
   sql += `UPDATE servers 
     SET cpu = '${metrics.cpu}', 
@@ -211,8 +210,6 @@ for (const [serverId, data] of Object.entries(serverLatestMetrics)) {
         ram_used = '${metrics.ram_used}', 
         swap_used = '${metrics.swap_used}', 
         disk_used = '${metrics.disk_used}',
-        last_updated = ${ts}, 
-        uptime = '${uptime}',
         ip_v4 = '${metrics.ip_v4}',
         ip_v6 = '${metrics.ip_v6}'
     WHERE id = '${serverId}';\n`;

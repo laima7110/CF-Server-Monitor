@@ -15,14 +15,14 @@ const translations = reactive({
     totalServers: 'Total Servers',
     totalTraffic: 'Total Traffic',
     realtimeSpeed: 'Real-time Speed',
-    online: 'ON',
-    offline: 'OFF',
+    online: 'Online',
+    offline: 'Offline',
     noServer: 'No servers available, please add in',
     backToAdmin: 'Admin Panel',
     back: 'cd ..',
     hostname: 'HOSTNAME',
     region: 'REGION',
-    archOs: 'ARCH/OS',
+    osArch: 'OS/ARCH',
     cpu: 'CPU',
     ram: 'RAM',
     disk: 'DISK',
@@ -79,8 +79,6 @@ const translations = reactive({
     logout: 'Logout',
     dashboard: 'DASHBOARD',
     total: 'Total',
-    onlineCount: 'Online',
-    offlineCount: 'Offline',
     avgCpu: 'Avg CPU',
     servers: 'Servers',
     settings: 'Settings',
@@ -152,9 +150,7 @@ const translations = reactive({
     confirmDeleteServers: '[?] Delete ',
     irreversible: ' selected servers? This action is irreversible.',
     imageSizeWarning: '[WARN] Image size > 800KB, consider using external URL',
-    enterServerName: '[WARN] Please enter a server name',
-    onlineStatus: '● ONLINE',
-    offlineStatus: '● OFFLINE'
+    enterServerName: '[WARN] Please enter a server name'
   },
   zh: {
     theme: '主题',
@@ -177,7 +173,7 @@ const translations = reactive({
     back: '返回',
     hostname: '主机名',
     region: '地区',
-    archOs: '架构/系统',
+    osArch: '系统/架构',
     cpu: 'CPU',
     ram: '内存',
     disk: '磁盘',
@@ -234,8 +230,6 @@ const translations = reactive({
     logout: '退出',
     dashboard: '仪表盘',
     total: '总数',
-    onlineCount: '在线',
-    offlineCount: '离线',
     avgCpu: '平均 CPU',
     servers: '服务器',
     settings: '设置',
@@ -307,9 +301,7 @@ const translations = reactive({
     confirmDeleteServers: '[?] 确定要删除 ',
     irreversible: ' 个选中的服务器吗？此操作不可撤销。',
     imageSizeWarning: '[警告] 图片大小超过 800KB，建议使用外部链接',
-    enterServerName: '[警告] 请输入服务器名称',
-    onlineStatus: '● 在线',
-    offlineStatus: '● 离线'
+    enterServerName: '[警告] 请输入服务器名称'
   }
 })
 

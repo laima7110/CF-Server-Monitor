@@ -132,7 +132,7 @@ export async function checkOfflineNodes(db) {
   
   try {
     const { results: allServers } = await db.prepare(
-      'SELECT id, name, last_updated FROM servers'
+      'SELECT id, name FROM servers'
     ).all();
     
     const latestMetricsMap = await getLatestMetricsForAllServers(db);
@@ -156,15 +156,11 @@ export async function checkOfflineNodes(db) {
     for (const s of allServers) {
       const latestMetrics = latestMetricsMap.get(s.id);
       
-      let lastUpdated;
+      let isOffline = true;
       if (latestMetrics) {
-        lastUpdated = latestMetrics.timestamp;
-      } else {
-        lastUpdated = new Date(s.last_updated).getTime();
+        const diff = now - latestMetrics.timestamp;
+        isOffline = diff > 300000;
       }
-      
-      const diff = now - lastUpdated;
-      const isOffline = diff > 300000;
 
       if (isOffline && !alertState[s.id]) {
         const msg = `⚠️ **节点离线告警**\n\n` +

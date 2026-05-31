@@ -58,20 +58,20 @@
           <span class="sysinfo-value">{{ server.cpu_cores || 'N/A' }}</span>
         </div>
         <div class="sysinfo-item">
-          <span class="sysinfo-label">📊 {{ trans.loadAvg }}</span>
-          <span class="sysinfo-value highlight">{{ server.load_avg || '0.00' }}</span>
-        </div>
-        <div class="sysinfo-item">
-          <span class="sysinfo-label">🕐 {{ trans.bootTime }}</span>
-          <span class="sysinfo-value" style="font-size:11px;">{{ formatBootTime(server.boot_time) }}</span>
-        </div>
-        <div class="sysinfo-item">
           <span class="sysinfo-label">💾 {{ trans.totalRam }}</span>
           <span class="sysinfo-value">{{ formatBytes(server.ram_total) }}</span>
         </div>
         <div class="sysinfo-item">
           <span class="sysinfo-label">💿 {{ trans.totalDisk }}</span>
           <span class="sysinfo-value">{{ formatBytes(server.disk_total) }}</span>
+        </div>
+        <div class="sysinfo-item">
+          <span class="sysinfo-label">📊 {{ trans.loadAvg }}</span>
+          <span class="sysinfo-value highlight">{{ server.load_avg || '0.00' }}</span>
+        </div>
+        <div class="sysinfo-item">
+          <span class="sysinfo-label">🕐 {{ trans.bootTime }}</span>
+          <span class="sysinfo-value" style="font-size:11px;">{{ formatBootTime(server.boot_time) }}</span>
         </div>
         <div class="sysinfo-item">
           <span class="sysinfo-label">🔽 {{ trans.trafficIn }}</span>
