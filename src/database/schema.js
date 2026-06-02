@@ -110,13 +110,23 @@ export async function getMetricsHistory(db, serverId, hours, columns) {
   );
 
   const rawResult = await db.prepare(`
+    WITH sampled AS (
+      SELECT 
+        timestamp, 
+        ${columns},
+        ROW_NUMBER() OVER (
+          PARTITION BY (timestamp / ?)
+          ORDER BY timestamp
+        ) AS rn
+      FROM metrics_history
+      WHERE server_id = ?
+        AND typeof(timestamp) = 'integer'
+        AND timestamp >= ?
+    )
     SELECT timestamp, ${columns}
-    FROM metrics_history
-    WHERE server_id = ?
-      AND typeof(timestamp) = 'integer'
-      AND timestamp >= ?
-      AND (timestamp % ?) = 0
-  `).bind(serverId, cutoff, intervalMs).all();
+    FROM sampled
+    WHERE rn = 1
+  `).bind(intervalMs, serverId, cutoff).all();
 
   const result = rawResult.results.map(row => ({
     ...row,
